@@ -1,0 +1,280 @@
+Lab 02 - More Packet Trace Analysis + Intro to ns2
+Packet Trace Analysis + Intro to ns2
+<#pre
+This lab can be done in groups of two.
+Open a file lab02.txt
+Copy-paste the lab statement starting from Q2 into lab02.txt
+Start writing your answers below the questions.
+Hint from TA: One team of two may want to do this in a shared google doc, that way if you are working on two machines, you can also collaboratively edit the file. In the end copy paste the
+whole text into lab02.txt just for submission. >
+Revise your lab01 submission, make sure you remember how to use tcpdump and wireshark, go through your answers and recall how you had gotten those answers. Clear doubts. (30 mins)
+Understanding network delays through wireshark (60 mins)
+This lab will  further reinforce concepts we discussed during  the tutorial session on Tuesday 4th of Aug. Try to relate that discussion to this activity.
+You’ve been given two packet traces - traceRemote.pcap and traceLocal.pcap
+Both traces are downloading the same file in two different scenarios.
+traceRemote.pcap
+Filter the trace on ip address  128.208.3.226 - this is the server from which the file is being downloaded.
+
+What is the client IP address?    10.129.5.166
+
+What is the application layer protocol being used for the download? HTTP
+
+You should find packets related to the opening of a TCP connection right in the beginning. For the  connection, there is a “handshake” happening:
+Client sends SYN (“Hello, I want to open a connection”)
+Server sends ACK & SYN (“Fine with me, and I also want to open a connection”)
+Client replies with an ACK (“OK, Great!”)
+Estimate the time elapsed between sending a SYN on the connection and getting an ACK back on that connection. This is a good estimate of the round trip time between this pair of source and destination.
+
+Round trip time 1 -  (3.678976000 - 3.426731000)s = 0.252245s = 252.245ms
+
+The server from which the file is being downloaded is situated in Seattle, the client in Mumbai. The distance from Mumbai to Seattle (one-way) is 12500 km. What is the round trip propagation delay expected at propagation speed of 2 X 10^8 m/s?
+
+2x(12500000/(2x10^8)) s = 125ms
+
+How much higher is the estimated RTT ? What do you think accounts for this difference?
+
+The estimated RTT is higher by 127ms. This delay is the result of delays - Transmission, Queueing and  Processing.
+
+After getting the “SYN, ACK” from the server, the client sends an ACK - what was the time elapsed between these two events? Among the delays you have learnt, what delay(s) might this elapsed time represent?
+
+0.037ms is the time elapsed between the two events. This delay is because of the processing delay.
+
+What is the time elapsed from starting of the connection request to getting the first packet of the file?
+
+  3.932832000 - 3.426731000 = 0.506101s 
+
+Scroll down to find the packet that looks like the last packet of the file. What is the elapsed time from getting the FIRST packet of the file to the LAST packet of the file?
+
+  14.441761000 - 3.932832000 = 10.508929s
+
+How much data was transferred for the file (estimate of the file size) ? Hint: the “acknowledgement” field from client to server states the number of bytes it has received + 1.
+
+902992 bytes
+
+What was the download data rate once file download started?
+
+902992/10.508929 =  85.926 KB/s
+
+What was time taken from the beginning of the connection to getting the complete file (not end of connection)
+
+14.441761000 - 3.426731000 = 11.01503s
+
+What is the effective data rate for downloading the whole file  
+(data transferred /time from starting the connection to getting the file)
+
+902992 bytes/11.01503s = 80.0568064 KB/s
+
+What is your observation regarding download data rate vs effective data rate?
+
+Effective data rate is lower than the download data rate.
+
+What was time taken from the beginning of the connection to end of connection?
+
+14.694585000 - 3.426731000 = 11.267854s
+
+
+
+----
+traceLocal.pcap
+Repeat the above analysis for this trace. Note that the physical distance between client and server here is < 1km.  Server IP is 10.105.1.3
+
+Filter the trace on ip address  10.105.1.3 - this is the server from which the file is being downloaded.
+
+What is the client IP address?    10.129.5.166
+
+What is the application layer protocol being used for the download? HTTP
+
+You should find packets related to the opening of a TCP connection right in the beginning. For the  connection, there is a “handshake” happening:
+Client sends SYN (“Hello, I want to open a connection”)
+Server sends ACK & SYN (“Fine with me, and I also want to open a connection”)
+Client replies with an ACK (“OK, Great!”)
+Estimate the time elapsed between sending a SYN on the connection and getting an ACK back on that connection. This is a good estimate of the round trip time between this pair of source and destination.
+
+Round trip time 1 -  (2.045289000 - 2.044752000)s = 0.000537s = 000.537ms
+
+Repeat the above analysis for this trace. Note that the physical distance between client and server here is < 1km.. What is the round trip propagation delay expected at propagation speed of 2 X 10^8 m/s?
+
+2x(1/(2x10^8)) s = 10^-5 ms(negligible)
+
+How much higher is the estimated RTT ? What do you think accounts for this difference?
+
+The estimated RTT is higher by 000.537ms. This delay is the result of delays - Transmission, Queueing and  Processing.
+
+After getting the “SYN, ACK” from the server, the client sends an ACK - what was the time elapsed between these two events? Among the delays you have learnt, what delay(s) might this elapsed time represent?
+
+0.028ms is the time elapsed between the two events. This delay is because of the processing delay.
+
+What is the time elapsed from starting of the connection request to getting the first packet of the file?
+
+  2.045928000 - 2.044752000 = 0.001176s 
+
+Scroll down to find the packet that looks like the last packet of the file. What is the elapsed time from getting the FIRST packet of the file to the LAST packet of the file?
+
+  2.126037000 - 2.045928000 = 0.080109s
+
+How much data was transferred for the file (estimate of the file size) ? Hint: the “acknowledgement” field from client to server states the number of bytes it has received + 1.
+
+903048 bytes
+
+What was the download data rate once file download started?
+
+903048/0.080109 =  11.27 MB/s
+
+What was time taken from the beginning of the connection to getting the complete file (not end of connection)
+
+2.126037000 - 2.044752000= 0.081285s
+
+What is the effective data rate for downloading the whole file  
+(data transferred /time from starting the connection to getting the file)
+
+903048/0.081285 bytes/s = 11.11 MB/s
+
+What is your observation regarding download data rate vs effective data rate?
+
+Effective data rate is lower than the download data rate.
+
+What was time taken from the beginning of the connection to end of connection?
+
+2.127352000 - 2.044752000 = 0.0826s
+
+
+Conclusion:
+What were the differences between these two downloads? (Stick only to differences from delays and rates point of view, not addresses/routes/next hops etc)
+
+
+[Answer] 
+In 1st case traceRemote.pcap propogation delay is significant due to high client-server distance, while in case 2 propogation delay is negligible.
+Due to long distance packet corruption probability is high thus retransmission takes extra time in case 1
+In 1st case rate is low(in KBps) while in case 2 rate is high(in MBps)
+
+ 
+________________________________________________________________________
+Introduction to ns (Network Simulator) [60 mins]
+Go through these slides  first.  
+Create an ns script and run it, and try a few simple “what-ifs”..
+Go through the following ns2 tutorial by Mark Greis
+In this section, you are going to develop a Tcl script for ns which simulates a simple topology. You are going to learn how to set up nodes and links, how to send data from one node to another, how to monitor a queue and how to start nam from your simulation script to visualize your simulation.
+
+How to start
+Now we are going to write a 'template' that you can use for all of the first Tcl scripts. You can write your Tcl scripts in any text editor.  Open a file lab02.tcl.
+Now read, understand, and start typing as instructed
+First of all, you need to create a simulator object. This is done with the command
+set ns [new Simulator]
+Now we open a file for writing that is going to be used for the nam trace data.
+set nf [open out.nam w]
+$ns namtrace-all $nf
+Open a file for creating an ascii trace file
+set f [open simple.tr w]
+$ns trace-all $f
+The first line opens the file 'out.nam' for writing and gives it the file handle 'nf'. In the second line we tell the simulator object that we created above to write all simulation data that is going to be relevant for nam into this file.
+The next step is to add a 'finish' procedure that closes the trace file and starts nam.
+proc finish {} {
+       global ns nf
+       $ns flush-trace
+       close $nf
+       exec nam out.nam &
+       exit 0
+}
+You don't really have to understand all of the above code yet. It will get clearer to you once you see what the code does.
+The next line tells the simulator object to execute the 'finish' procedure after 5.0 seconds of simulation time.
+$ns at 5.0 "finish"
+You probably understand what this line does just by looking at it. ns provides you with a very simple way to schedule events with the 'at' command.
+The last line finally starts the simulation.
+$ns run
+
+
+You can actually save the file now and try to run it with 'ns lab02.tcl'. You are going to get an error message like 'nam: empty trace file out.nam' though, because until now we haven't defined any objects (nodes, links, etc.) or events.
+
+Two nodes, one link
+In this section we are going to define a very simple topology with two nodes that are connected by a link. The following two lines define the two nodes. (Note: You have to insert the code in this sectionbefore the line '$ns run', or even better, before the line '$ns at 5.0 "finish"').
+set n0 [$ns node]
+set n1 [$ns node]
+A new node object is created with the command '$ns node'. The above code creates two nodes and assigns them to the handles 'n0' and 'n1'.
+The next line connects the two nodes.
+$ns duplex-link $n0 $n1 1Mb 10ms DropTail
+This line tells the simulator object to connect the nodes n0 and n1 with a duplex link with the bandwidth 1Megabit, a delay of 10ms and a DropTail queue.
+Add a queue limit to this link:
+$ns queue-limit $n0 $n1 20
+This means that 20 packets can be waiting to be transmitted at this link.
+Now you can save your file and start the script with 'ns example1.tcl'. nam will be started automatically and you should see an output that resembles the picture below.
+
+
+Sending data
+Of course, this example isn't very satisfying yet, since you can only look at the topology, but nothing actually happens, so the next step is to send some data from node n0 to node n1. In ns, data is always being sent from one 'agent' to another. So the next step is to create an agent object that sends data from node n0, and another agent object that receives the data on node n1.
+#Create a UDP agent and attach it to node n0
+set udp0 [new Agent/UDP]
+$ns attach-agent $n0 $udp0
+
+# Create a CBR traffic source and attach it to udp0
+set cbr0 [new Application/Traffic/CBR]
+$cbr0 set packetSize_ 500
+$cbr0 set interval_ 0.005
+$cbr0 attach-agent $udp0
+These lines create a UDP agent and attach it to the node n0, then attach a CBR traffic generator to the UDP agent. CBR stands for 'constant bit rate'. Line 7 and 8 should be self-explaining. The packetSize is being set to 500 bytes and a packet will be sent every 0.005 seconds (i.e. 200 packets per second).
+The next lines create a Null agent which acts as traffic sink and attach it to node n1.
+set null0 [new Agent/Null] 
+$ns attach-agent $n1 $null0
+Now the two agents have to be connected with each other.
+$ns connect $udp0 $null0
+And now we have to tell the CBR agent when to send data and when to stop sending. Note: It's probably best to put the following lines just before the line '$ns at 5.0 "finish"'.
+$ns at 0.5 "$cbr0 start"
+$ns at 4.5 "$cbr0 stop"
+This code should be self-explaining again.
+Now you can save the file and start the simulation again. When you click on the 'play' button in the nam window, you will see that after 0.5 simulation seconds, node 0 starts sending data packets to node 1. You might want to slow nam down then with the 'Step' slider.
+
+I suggest that now you start some experiments with nam and the Tcl script. You can click on any packet in the nam window to monitor it, and you can also click directly on the link to get some graphs with statistics.
+
+Run the simulation script you created, and the run the network animator. Play with nam any way you wish.
+See the text trace.  See here for the interpretation of the trace.
+How many packet drops do you see? (Use grep … | wc) (Write this answer this in lab02.txt)
+Change the simulation setup in any way you want to see some  packet drops. Try two different ways of getting packet drops. (Write this answer this in lab02.txt)
+
+[Answer]
+Number of drops: 801
+Reason  for drops: Decreased the queue size to 1
+Number of drops: 2982
+Reason  for drops: Decreased  the time interval between releasing simultaneous packets to 0.001
+
+
+<#post
+Put lab01.txt, lab02.tcl and all output files created by ns2 in a directory called lab02
+Tar the directory (create lab02.tar.gz)
+Create another directory rollno1_rollno2
+Put lab02.tar.gz (and nothing else) in this directory.
+Tar this directory (rollno1_rollno2.tar.gz)
+Submit this tar on bodhitree1
+Additionally please also upload it here:
+
+ns2 trace guide
+(reproduced from: http://ns2ultimate.tumblr.com/post/2496927327/post-processing-ns2-result-using-ns2-trace-trace)
+Trace file format
+The format of a trace string is shown below:
+
+where 12 fields of the trace string are as follows.
+1. Type Identifier:
+“+”: a packet enque event
+“-”: a packet deque event
+“r”: a packet reception event
+“d”: a packet drop (e.g., sent to dropHead_) event
+“c”: a packet collision at the MAC level
+2. Time: at which the packet tracing string is created.
+3-4. Source Node and Destination Node: denote the IDs of the source and the destination nodes of the tracing object.
+5. Packet Name: Name of the packet type
+6. Packet Size: Size of the packet in bytes.
+7. Flags: A 7-digit flag string
+“-”: disable
+1st = “E”: ECN (Explicit Congestion Notification) echo is enabled.
+2nd = “P”: the priority in the IP header is enabled.
+3rd : Not in use
+4th = “A”: Congestion action
+5th = “E”: Congestion has occurred.
+6th = “F”: The TCP fast start is used.
+7th = “N”: Explicit Congestion Notification (ECN) is on.
+8. Flow ID
+9-10. Source Address and Destination Address: the format of these two fields is “a.b”, where “a" is the address and "b" is the port.
+11. Sequence Number
+12. Packet Unique ID
+Published by Google Drive–Report Abuse–Updated automatically every 5 minutes
+
+
+
