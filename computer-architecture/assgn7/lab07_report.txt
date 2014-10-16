@@ -1,0 +1,23 @@
+[Benefits of data forwarding in the MIPS64 pipeline]
+
+[Q1]
+With data forwarding enabled, number of clock cycles = 187
+With data forwarding disabled, number of clock cycles = 258
+
+[Q2]
+With data forwarding disabled, number of clock cycles = 258
+With data forwarding enabled, number of clock cycles = 177
+
+[Code scheduling for performance improvement]
+[Q3-4]
+The number of stalls reduced to 126 and cycles to 159.
+The stalls that couldn't be optimised by scheduling were those between muli and the next addi.
+
+[Code Unrolling]
+[Q5]
+The number of stalls were 177, though the number of cycles reduced to 165 from 177
+
+[Code Unrolling and Scheduling]
+[Q6]
+The number of stalls reduced to 78 and cycles to 123.
+There are still stalls between sd and beq in the end and also an ld and an sd. But, removing them created more stalls and I chose lesser of two evils.
