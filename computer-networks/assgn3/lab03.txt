@@ -1,0 +1,67 @@
+[Task 1]
+Keep increasing the window size to increase the throughput. Enter
+throughput obtained for 3 different window sizes.
+Ans: Window Size      throughput
+	 4					61.2544 KBps
+	 15					226.989 KBps
+     40                 244.249 KBps
+	  
+What is the maximum throughput the ftp flow can achieve?
+Ans: 244.249 KB/sec
+
+What is window size (minimum) at which this throughput was
+obtained?
+Ans: 20
+
+How does this compare with the raw data rate of the bottleneck link?
+Ans: 2 Mbps = 250 KBps which is  comparable to maximum throughput value 244.249 KBps
+
+[Task 2]
+Enter 3 different throughput values (in increasing order), for 3 different sets of flow parameters
+Ans: Interval		Number of packets		Throughput
+	 0.01			1000					99.3989 KB/sec
+	 0.01			5000					248.237 KB/sec
+	 0.1			1000					10.146 KB/sec
+
+What is the maximum throughput this flow can achieve?
+Ans: 248.237 KB/sec
+
+How does this compare with the raw data rate of the bottleneck link?
+Ans: Again, it's comparable. 2Mbps = 250LBps, and the result we got was 248.237 KB/sec.
+
+[Task 3]
+Calculate CBR throughput, CBR delay, FTP throughput, FTP Delay
+Ans: CBR packet size = 1000
+	 CBR interval = 0.01
+	 FTP window size = 20
+	 CBR throughput = 99.3394 KB/sec
+	 CBR delay (average) = 2.13758 
+	 FTP throughput = 244.249 KB/sec
+	 FTP delay = 0.0534198
+
+
+Keep increasing the CBR flow offered* rate and see its impact on the FTP flow throughput and delay
+Ans: Interval Size		FTP Throughput		FTP Delay		CBR Throughput		CBR Delay
+	 (constant packet size)
+	 0.005				139.681 KB/sec		0.0504572		196.364 KB/sec		2.14952
+	 0.0025				108.729 KB/sec		0.0527053		243.576 KB/sec		2.249
+	 0.001				108.729 KB/sec		0.0527053		243.576 KB/sec		2.249
+
+Write down conclusions regarding how
+○ The increase affects CBR’s own throughput and delay
+Ans: Increasing the flow rate increases the throughput and also the delay, but as we see in tha above table, it becomes constant after some point.
+○ How the increase affects FTP’s throughput and delay
+Ans: In this case, the throughput decreases but the delay increases. Here too, the value converges to a constant.
+
+[Task 4]
+Now keep increasing the bandwidth of the 0-2 link (and correspondingly the window size so as to keep utilizing the link fully).
+Ans: Bandwidth		Window Size		FTP Throughput		FTP Delay		CBR Throughput		CBR Delay
+	 4Mbps			20				268.936 KB/sec		0.0458695		99.1612 KB/sec		2.14705
+	 8Mbps			20				246.48 KB/sec		0.0440515		98.8869 KB/sec		2.15043
+	 16Mbps			20				243.403 KB/sec		0.0439623		98.8911 KB/sec		2.14984
+	 
+Write down conclusions regarding how
+○ The increase affects FTP’s own throughput and delay
+Ans: The FTP throughput initially increases and then decreases. The delay initially decreases and then increases.
+○ How the increase affects CBR’s throughput and delay
+Ans: The CBR throughput initially decreases and then increases. The delay first increases and then decreases.
