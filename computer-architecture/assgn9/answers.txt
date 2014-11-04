@@ -1,0 +1,57 @@
+Effect of memory hierarchy on the performance of matrix multiplication
+
+1. Readings for mat-mult.cpp
+real	0m0.527s
+user	0m0.528s
+sys		0m0.000s
+----------------
+real	0m0.542s
+user	0m0.538s
+sys		0m0.004s
+----------------
+real	0m0.523s
+user	0m0.519s
+sys		0m0.004s
+----------------
+real	0m0.544s
+user	0m0.540s
+sys		0m0.004s
+----------------
+real	0m0.543s
+user	0m0.540s
+sys		0m0.004s
+----------------
+user time median = 0m0.538s
+
+2. Readings for mat-mult-opt.cpp
+real	0m0.451s
+user	0m0.447s
+sys		0m0.004s
+----------------
+real	0m0.449s
+user	0m0.445s
+sys		0m0.004s
+----------------
+real	0m0.448s
+user	0m0.444s
+sys		0m0.004s
+----------------
+real	0m0.449s
+user	0m0.445s
+sys		0m0.004s
+----------------
+real	0m0.442s
+user	0m0.444s
+sys		0m0.000s
+----------------
+user time median = 0m0.445s
+
+--------------------------------------------------------------------------------
+Confirming the effect of the memory hierarchy, using dineroIV
+Differences: 15400 misses in non optimised v/s 10941 in optimised
+
+--------------------------------------------------------------------------------
+Writing a program to guess the size of the cache
+The cache size is 128KB for L2 and 2MB for L3 caches.
+
+--------------------------------------------------------------------------------
